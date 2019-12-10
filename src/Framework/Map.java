@@ -1,5 +1,7 @@
 package Framework;
 
+import Framework.Items.Item;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -15,10 +17,10 @@ public class Map {
         rooms = build(new File(filePath));
     }
 
-    public static void main(String[] args) {
-        Map map = new Map("testOut.txt");
-        map.saveMap(new File("testOut.txt"));
-    }
+//    public static void main(String[] args) {
+//        Map map = new Map("testOut.txt");
+//        map.saveMap(new File("testOut.txt"));
+//    }
 
     private Room[] build(File file) {
         Room[] rooms = null;
@@ -36,7 +38,7 @@ public class Map {
                 ArrayList<String> descriptions = new ArrayList<>(Arrays.asList(input.next().trim().split(",")));
                 ArrayList<Item> items = new ArrayList<>();
                 for (String s : input.next().trim().split(",")) {
-                    items.add(new Item(s));
+                    items.add(Item.makeItem(s));
                 }
 
                 rooms[roomID] = new Room(roomID, roomName, descriptions, items);
