@@ -1,7 +1,7 @@
 package Framework.Items;
 
 public class Scroll extends Item {
-    private String name;
+    private String name = "SCROLL";
     private String description;
 
     public Scroll(String description){
@@ -22,5 +22,10 @@ public class Scroll extends Item {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

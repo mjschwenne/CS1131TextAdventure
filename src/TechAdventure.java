@@ -9,7 +9,7 @@ public class TechAdventure implements ConnectionListener{
 
     public TechAdventure() {
         Map map = new Map("roomTest.txt");
-        adventureServer = new AdventureServer ( );
+        adventureServer = new AdventureServer();
         player = new PC(map.rooms[0]);
         adventureServer.setOnTransmission ( this );
     }
@@ -56,6 +56,8 @@ public class TechAdventure implements ConnectionListener{
                         case "INVENTORY":
                             adventureServer.sendMessage(e.getConnectionID(), player.printInventory());
                             break;
+                        case "INSPECT":
+                            adventureServer.sendMessage(e.getConnectionID(), player.inspectItem(e.getData().toUpperCase().split(" ")[1]));
                         case "SAVE":
                             //Save here
                             break;

@@ -1,7 +1,7 @@
 package Framework.Items;
 
 public class Bubbles extends Item {
-    private String name = "Bubbles";
+    private String name = "BUBBLES";
     private String description = "It is a bubble made of a very fragrant soap. You can’t possibly fathom why one would be in a crypt.";
 
 
@@ -18,5 +18,10 @@ public class Bubbles extends Item {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

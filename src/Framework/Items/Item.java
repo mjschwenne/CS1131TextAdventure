@@ -5,9 +5,9 @@ public abstract class Item {
 
     abstract String interact();
 
-    abstract String inspect();
+    public abstract String inspect();
 
-    abstract String getName();
+    public abstract String getName();
 
     public static Item makeItem(String s){
         String[] itemData = s.split("\\*");
@@ -15,13 +15,13 @@ public abstract class Item {
         switch (itemData[0]){
             case "ORB":
                 return new Orb();
-            case "Torch":
+            case "TORCH":
                 return new Torch();
-            case "Scroll":
+            case "SCROLL":
                 return new Scroll(itemData[1]);
-            case "Knife":
+            case "KNIFE":
                 return new Knife();
-            case "Bubbles":
+            case "BUBBLES":
                 return new Bubbles();
         }
         return null;

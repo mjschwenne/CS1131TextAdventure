@@ -13,14 +13,32 @@ public class PC {
     }
 
     public String getItem(String item){
-        inventory.add(new Item(item));
-        return "You received the " + item;
+        if(currentRoom.getItem(item).name.equals(item)) {
+            inventory.add(Item.makeItem(item));
+            return "You received the " + item;
+        }
+        return item + " is not available.";
     }
 
     public String dropItem(String item){
-        //TODO Fix this thing.
-        inventory.remove(new Item(item));
+        Item temp = null;
+        for(Item e : inventory) {
+            if(e.getName().equals(item)) {
+                temp = e;
+            }
+        }
+        inventory.remove(temp);
         return "You dropped the " + item;
+    }
+
+    public String inspectItem(String item) {
+        Item temp = null;
+        for(Item e : inventory) {
+            if(e.getName().equals(item)) {
+                return e.inspect();
+            }
+        }
+        return item + " is not in your inventory";
     }
 
     public String look() {
