@@ -1,3 +1,4 @@
+import Framework.Map;
 import Framework.PC;
 
 import java.io.IOException;
@@ -7,8 +8,9 @@ public class TechAdventure implements ConnectionListener{
     PC player = null;
 
     public TechAdventure() {
+        Map map = new Map("roomTest.txt");
         adventureServer = new AdventureServer ( );
-        player = new PC();
+        player = new PC(map.rooms[0]);
         adventureServer.setOnTransmission ( this );
     }
 
@@ -36,23 +38,23 @@ public class TechAdventure implements ConnectionListener{
                     // What do you do when the connection is established?
                     break;
                 case TRANSMISSION_RECEIVED:
-                    adventureServer.sendMessage ( e.getConnectionID ( ), String.format ("MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
+                    //adventureServer.sendMessage ( e.getConnectionID ( ), String.format ("MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
                     switch(e.getData().toUpperCase().split(" ")[0]) {
                         //GET, DROP, GO, LOOK, INVENTORY, SAVE, RESTORE, QUIT
                         case "GET":
-                            player.getItem(e.getData().toUpperCase().split(" ")[1]);
+                            adventureServer.sendMessage(e.getConnectionID(), player.getItem(e.getData().toUpperCase().split(" ")[1]));
                             break;
                         case "DROP":
-                            player.dropItem(e.getData().toUpperCase().split(" ")[1]);
+                            adventureServer.sendMessage(e.getConnectionID(), player.dropItem(e.getData().toUpperCase().split(" ")[1]));
                             break;
                         case "GO":
-                            player.go(e.getData().toUpperCase().split(" "));
+                            adventureServer.sendMessage(e.getConnectionID(), player.go(e.getData().toUpperCase().split(" ")));
                             break;
                         case "LOOK":
-                            player.look();
+                            adventureServer.sendMessage(e.getConnectionID(), player.look());
                             break;
                         case "INVENTORY":
-                            player.printInventory();
+                            adventureServer.sendMessage(e.getConnectionID(), player.printInventory());
                             break;
                         case "SAVE":
                             //Save here

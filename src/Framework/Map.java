@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Map {
 
-    private Room[] rooms;
+    public Room[] rooms;
 
     public Map(String filePath) {
         rooms = build(new File(filePath));

@@ -2,32 +2,35 @@ package Framework;
 import java.util.ArrayList;
 
 public class PC {
-    private Room currentRoom;
+    private Room currentRoom = null;
     private ArrayList<Item> inventory = null;
 
-    public PC() {
+    public PC(Room currentRoom) {
         this.inventory = new ArrayList<>();
+        this.currentRoom = currentRoom;
     }
 
-    public void getItem(String item){
+    public String getItem(String item){
         inventory.add(new Item(item));
+        return "You received the " + item;
     }
 
-    public void dropItem(String item){
+    public String dropItem(String item){
         //TODO Fix this thing.
         inventory.remove(new Item(item));
+        return "You dropped the " + item;
     }
 
-    public void look() {
+    public String look() {
         //TODO this might change
-        System.out.println(currentRoom.getDescription(this));
+        return currentRoom.getDescription(this);
     }
 
-    public void printInventory(){
-        System.out.println(inventory);
+    public String printInventory(){
+        return inventory.toString();
     }
 
-    public void go(String[] direction) {
+    public String go(String[] direction) {
         if(direction.length > 2) {
             //Portals
             switch(direction[2]) {
@@ -44,6 +47,7 @@ public class PC {
                     currentRoom = currentRoom.getPortalSouth();
                     break;
             }
+            return "You moved through the " + direction[2] + " " +  direction[1] + ".";
         } else {
             //Doors
             switch(direction[1]) {
@@ -60,6 +64,7 @@ public class PC {
                     currentRoom = currentRoom.getSouth();
                     break;
             }
+            return "You moved through the " + direction[1] + " door.";
         }
     }
 
