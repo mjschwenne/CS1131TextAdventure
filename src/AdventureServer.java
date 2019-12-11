@@ -58,8 +58,7 @@ public final class AdventureServer implements AdventureServerAPI {
 				ConnectionEvent event = new ConnectionEvent ( ConnectionEventCode.CONNECTION_ESTABLISHED, connection.connectionId, "CONNECTION_ESTABLISHED" );
 				connection.adventureServer.listener.handle ( event );
 				String s = "";
-				while ( connection.adventureServer.isRunning && ( s = connection.input
-						                                                        .readLine ( ) ) != null ) {
+				while ( connection.adventureServer.isRunning && ( s = connection.input.readLine( ) ) != null ) {
 					event = new ConnectionEvent ( ConnectionEventCode.TRANSMISSION_RECEIVED, connection.connectionId, s );
 					connection.adventureServer.listener.handle ( event );
 				}

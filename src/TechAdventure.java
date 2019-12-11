@@ -67,6 +67,9 @@ public class TechAdventure implements ConnectionListener{
                         case "QUIT":
                             adventureServer.disconnect(e.getConnectionID());
                             break;
+                        default:
+                            adventureServer.sendMessage(e.getConnectionID(), player.resetPlayer());
+                            break;
                     }
                     break;
                 case CONNECTION_TERMINATED:
