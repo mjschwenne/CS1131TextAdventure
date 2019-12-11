@@ -21,6 +21,11 @@ public class PC {
         return look();
     }
 
+    public PC(Room currentRoom, ArrayList<Item> inventory) {
+        this.currentRoom = currentRoom;
+        this.inventory = inventory;
+    }
+
     public String getItem(String item){
         if(currentRoom.getItem(item).getName().equals(item)) {
             inventory.add(Item.makeItem(item));
@@ -141,4 +146,16 @@ public class PC {
         }
     }
 
+    public StringBuilder save(){
+        StringBuilder result = new StringBuilder();
+        result.append("PC|\n");
+        for (int i = 0; i < inventory.size(); i++) {
+            result.append(inventory.get(i));
+            if (i + 1 < inventory.size()) {
+                result.append(",");
+            }
+        }
+        result.append("|\n").append(currentRoom.getID()).append("|");
+        return result;
+    }
 }

@@ -29,8 +29,6 @@ public class AdventureClient {
 				fromServer.close ();
 				toServer.close ();
 				keyboardInput.close ();
-			} catch ( UnknownHostException e ) {
-				e.printStackTrace ( );
 			} catch ( IOException e ) {
 				e.printStackTrace ( );
 			}

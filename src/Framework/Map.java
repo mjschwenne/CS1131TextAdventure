@@ -16,11 +16,6 @@ public class Map {
         rooms = build(new File(filePath));
     }
 
-//    public static void main(String[] args) {
-//        Map map = new Map("testOut.txt");
-//        map.saveMap(new File("testOut.txt"));
-//    }
-
     private Room[] build(File file) {
         Room[] rooms = null;
         Integer[][] connectionData;
@@ -68,6 +63,49 @@ public class Map {
             e.printStackTrace();
         }
         return rooms;
+    }
+
+    public void rebuild(String data) {
+        Room[] rooms = null;
+        Integer[][] connectionData;
+        Room[][] roomConnections;
+        Scanner input = new Scanner(data);
+        input.useDelimiter("\\|");
+        rooms = new Room[input.nextInt()];
+        connectionData = new Integer[rooms.length][8];
+        roomConnections = new Room[rooms.length][8];
+        for (int i = 0; i < rooms.length; i++) {
+            int roomID = Integer.parseInt(input.next().trim());
+            String roomName = input.next().trim();
+            ArrayList<String> descriptions = new ArrayList<>(Arrays.asList(input.next().trim().split(",")));
+            ArrayList<Item> items = new ArrayList<>();
+            for (String s : input.next().trim().split(",")) {
+                items.add(Item.makeItem(s));
+            }
+
+            rooms[roomID] = new Room(roomID, roomName, descriptions, items);
+            String[] Links = input.next().trim().split(",");
+
+            for (int j = 0; j < Links.length; j++) {
+                connectionData[i][j] = Integer.parseInt(Links[j]);
+            }
+        }
+
+        for (int i = 0; i < connectionData.length; i++) {
+            for (int j = 0; j < connectionData[i].length; j++) {
+                if (connectionData[i][j] >= 0) {
+                    roomConnections[i][j] = rooms[connectionData[i][j]];
+                } else {
+                    roomConnections[i][j] = null;
+                }
+            }
+        }
+
+        for (int i = 0; i < rooms.length; i++) {
+            rooms[i].connect(roomConnections[i]);
+        }
+
+        input.close();
     }
 
     public StringBuilder saveMap() {
