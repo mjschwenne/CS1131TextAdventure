@@ -13,7 +13,8 @@ public class PC {
     }
 
     public String getItem(String item){
-        if(currentRoom.getItem(item).name.equals(item)) {
+        System.out.println(currentRoom.getItems());
+        if(currentRoom.getItem(item).getName().equals(item)) {
             inventory.add(Item.makeItem(item));
             return "You received the " + item;
         }

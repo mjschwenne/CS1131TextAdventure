@@ -7,5 +7,5 @@ This is the default description,ORB= This is the orb description|
 1|
 Test Room 2|
 description|
-torch|
+TORCH|
 -1,0,-1,-1,-1,-1,-1,-1|
