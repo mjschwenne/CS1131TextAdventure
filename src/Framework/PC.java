@@ -18,7 +18,7 @@ public class PC {
     public String resetPlayer() {
         currentRoom = startRoom;
         inventory.clear();
-        return look();
+        return look(new String[0]);
     }
 
     public PC(Room currentRoom, ArrayList<Item> inventory) {
@@ -56,7 +56,6 @@ public class PC {
     }
 
     public String inspectItem(String item) {
-        Item temp = null;
         for(Item e : inventory) {
             if(e.getName().equals(item)) {
                 return e.inspect();
@@ -65,7 +64,10 @@ public class PC {
         return item + " is not in your inventory.";
     }
 
-    public String look() {
+    public String look(String[] item) {
+        if(item.length > 1) {
+            return inspectItem(item[1]);
+        }
         return currentRoom.getDescription(this);
     }
 
@@ -83,28 +85,28 @@ public class PC {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalNorth();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look();
+                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look(new String[0]);
                         }
                     case "EAST":
                         if(currentRoom.getPortalEast() == null) {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalEast();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look();
+                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look(new String[0]);
                         }
                     case "WEST":
                         if(currentRoom.getPortalWest() == null) {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalWest();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look();
+                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look(new String[0]);
                         }
                     case "SOUTH":
                         if(currentRoom.getPortalSouth() == null) {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalSouth();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look();
+                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look(new String[0]);
                         }
                     default:
                         return "Invalid Direction Command";
@@ -121,28 +123,28 @@ public class PC {
                         break;
                     } else {
                         currentRoom = currentRoom.getNorth();
-                        return "You moved through the " + direction[1] + " door. " + look();
+                        return "You moved through the " + direction[1] + " door. " + look(new String[0]);
                     }
                 case "EAST":
                     if(currentRoom.getEast() == null) {
                         break;
                     } else {
                         currentRoom = currentRoom.getEast();
-                        return "You moved through the " + direction[1] + " door. " + look();
+                        return "You moved through the " + direction[1] + " door. " + look(new String[0]);
                     }
                 case "WEST":
                     if(currentRoom.getWest() == null) {
                         break;
                     } else {
                         currentRoom = currentRoom.getWest();
-                        return "You moved through the " + direction[1] + " door. " + look();
+                        return "You moved through the " + direction[1] + " door. " + look(new String[0]);
                     }
                 case "SOUTH":
                     if(currentRoom.getSouth() == null) {
                         break;
                     } else {
                         currentRoom = currentRoom.getSouth();
-                        return "You moved through the " + direction[1] + " door. " + look();
+                        return "You moved through the " + direction[1] + " door. " + look(new String[0]);
                     }
                 default:
                     return "Invalid Direction Command";
