@@ -6,9 +6,10 @@ import java.io.IOException;
 public class TechAdventure implements ConnectionListener{
     AdventureServer adventureServer = null;
     PC player = null;
+    Map map = null;
 
     public TechAdventure() {
-        Map map = new Map("roomTest.txt");
+        map = new Map("roomTest.txt");
         adventureServer = new AdventureServer();
         player = new PC(map.rooms[0]);
         adventureServer.setOnTransmission ( this );
@@ -59,7 +60,6 @@ public class TechAdventure implements ConnectionListener{
                         case "INSPECT":
                             adventureServer.sendMessage(e.getConnectionID(), player.inspectItem(e.getData().toUpperCase().split(" ")[1]));
                         case "SAVE":
-                            //Save here
                             break;
                         case "RESTORE":
                             //Load save here

@@ -5,7 +5,6 @@ public class Scroll extends Item {
     private String description;
 
     public Scroll(String description){
-        this.name = name;
         this.description = description;
     }
 
