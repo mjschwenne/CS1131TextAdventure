@@ -27,11 +27,16 @@ public class PC {
     }
 
     public String getItem(String item){
-        if(currentRoom.getItem(item).getName().equals(item)) {
-            inventory.add(Item.makeItem(item));
-            return "You received the " + item + ".";
+        if(currentRoom.getItem(item) == null) {
+        } else {
+            if(currentRoom.getItem(item).getName().equals(item)) {
+                inventory.add(Item.makeItem(item));
+                return "You received the " + item + ".";
+            } else {
+                return item + " is not available";
+            }
         }
-        return item + " is not available or is not valid.";
+        return item + " is not valid.";
     }
 
     public String dropItem(String item){
