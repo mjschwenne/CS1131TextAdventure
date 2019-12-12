@@ -60,6 +60,15 @@ public class PC {
 
     }
 
+    public ArrayList<Item> getInventory(){
+        ArrayList<Item> cleanInventory = new ArrayList<>();
+        for (Item e: inventory){
+            if (e != null) cleanInventory.add(e);
+        }
+        inventory = cleanInventory;
+        return inventory;
+    }
+
     public String look(String[] item) {
         if(gameOver) {
             return "Command not Available";
@@ -104,16 +113,20 @@ public class PC {
     }
 
     public String fight() {
-        if(inCombat == true) {
+        if(inCombat) {
             ArrayList<String> weapons = new ArrayList<>();
             String weaponsList = "";
             for(Item e : inventory) {
-                if(e.getName().equals("TORCH")) {
-                    weapons.add("TORCH");
-                } else if(e.getName().equals("KNIFE")) {
-                    weapons.add("KNIFE");
-                } else if(e.getName().equals("BUBBLES")) {
-                    weapons.add("BUBBLES");
+                switch (e.getName()) {
+                    case "TORCH":
+                        weapons.add("TORCH");
+                        break;
+                    case "KNIFE":
+                        weapons.add("KNIFE");
+                        break;
+                    case "BUBBLES":
+                        weapons.add("BUBBLES");
+                        break;
                 }
             }
             for(String i: weapons) {
@@ -124,6 +137,7 @@ public class PC {
         return "Command not available";
 
     }
+
 
     public String go(String[] direction) {
         if(gameOver || inCombat) {

@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TechAdventure implements ConnectionListener {
-    AdventureServer adventureServer = null;
-    PC player = null;
-    Map map = null;
-    NPC npc = null;
-    String monsterWeapon = "";
+    private AdventureServer adventureServer = null;
+    private PC player = null;
+    private Map map = null;
+    private NPC npc = null;
 
     public TechAdventure() {
-        map = new Map("roomMap.txt");
+        map = new Map();
+        build("roomMap.txt");
         adventureServer = new AdventureServer();
         player = new PC(map.rooms[0]);
         npc = new NPC();
@@ -86,13 +86,13 @@ public class TechAdventure implements ConnectionListener {
                             adventureServer.sendMessage(newID, save(newID));
                             break;
                         case "RESTORE":
-                            adventureServer.sendMessage(e.getConnectionID(), restore("save_" + e.getConnectionID() + ".txt"));
+                            adventureServer.sendMessage(e.getConnectionID(), build("save_" + e.getConnectionID() + ".txt"));
                             break;
                         case "QUIT":
                             adventureServer.disconnect(e.getConnectionID());
                             break;
                         case "RESET":
-                            adventureServer.sendMessage(e.getConnectionID(), restore("roomMap.txt"));
+                            adventureServer.sendMessage(e.getConnectionID(), build("roomMap.txt"));
                             break;
                         default:
                             adventureServer.sendMessage(e.getConnectionID(), "Invalid Command");
@@ -110,9 +110,9 @@ public class TechAdventure implements ConnectionListener {
         }
     }
 
-    private String restore(String saveFilepath) {
+    private String build(String saveFilepath) {
         try (Scanner input = new Scanner(new File(saveFilepath))) {
-            map.rebuild(input.useDelimiter("PC\\|").next());
+            map.build(input.useDelimiter("PC\\|").next());
             input.useDelimiter("\\|");
             input.next();
             ArrayList<Item> items = new ArrayList<>();
@@ -120,7 +120,7 @@ public class TechAdventure implements ConnectionListener {
                 items.add(Item.makeItem(s));
             }
             player = new PC(map.rooms[Integer.parseInt(input.next().trim())], items);
-            return "Game restored to this connection IDs last save.";
+            return "Save loaded.";
         } catch (FileNotFoundException e) {
             return e.toString();
         }
