@@ -1,5 +1,6 @@
 import Framework.Items.Item;
 import Framework.Map;
+import Framework.NPC;
 import Framework.PC;
 
 import java.io.File;
@@ -48,7 +49,7 @@ public class TechAdventure implements ConnectionListener {
                 case TRANSMISSION_RECEIVED:
                     //adventureServer.sendMessage ( e.getConnectionID ( ), String.format ("MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
                     switch (e.getData().toUpperCase().split(" ")[0]) {
-                        //GET, DROP, GO, LOOK, INVENTORY, SAVE, RESTORE, QUIT
+                        //GET, DROP, GO, LOOK, INVENTORY, FIGHT, SAVE, RESTORE, QUIT
                         case "GET":
                             adventureServer.sendMessage(e.getConnectionID(), player.getItem(e.getData().toUpperCase().split(" ")[1]));
                             break;
@@ -64,14 +65,26 @@ public class TechAdventure implements ConnectionListener {
                         case "INVENTORY":
                             adventureServer.sendMessage(e.getConnectionID(), player.printInventory());
                             break;
+                        case "FIGHT":
+                            adventureServer.sendMessage(e.getConnectionID(), player.fight());
+                            break;
+                        case "KNIFE":
+                            break;
+                        case "TORCH":
+                            break;
+                        case "BUBBLES:":
+                            break;
                         case "SAVE":
                             adventureServer.sendMessage(e.getConnectionID(), save(e.getConnectionID()));
                             break;
                         case "RESTORE":
-                            adventureServer.sendMessage(e.getConnectionID(), restore(e.getConnectionID()));
+                            adventureServer.sendMessage(e.getConnectionID(), restore("save_" + e.getConnectionID() + ".txt"));
                             break;
                         case "QUIT":
                             adventureServer.disconnect(e.getConnectionID());
+                            break;
+                        case "RESET":
+                            adventureServer.sendMessage(e.getConnectionID(), restore("roomMap.txt"));
                             break;
                         default:
                             adventureServer.sendMessage(e.getConnectionID(), "Invalid Command");
@@ -89,8 +102,8 @@ public class TechAdventure implements ConnectionListener {
         }
     }
 
-    private String restore(long connectionID) {
-        try (Scanner input = new Scanner(new File("save_" + connectionID + ".txt"))) {
+    private String restore(String saveFilepath) {
+        try (Scanner input = new Scanner(new File(saveFilepath))) {
             map.rebuild(input.useDelimiter("PC\\|").next());
             input.useDelimiter("\\|");
             input.next();
