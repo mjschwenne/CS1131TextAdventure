@@ -1,7 +1,7 @@
 package Framework.Items;
 
 public class Orb extends Item {
-    private String name = "ORB OF SPACE-WARP";
+    private String name = "ORB";
     private String description = "A curious device of some kind. You can feel space fold and twist around you. Could this be what you need to escape?";
 
     @Override
