@@ -29,11 +29,11 @@ public class PC {
             return "Command not Available";
         }
         if(currentRoom.getItem(item) == null) {
-            return item + " is not valid.";
+            return item + " is not a valid item.";
         } else {
             if (currentRoom.getItem(item).getName().equals(item)) {
+                inventory.add(currentRoom.getItem(item));
                 currentRoom.getItems().remove(currentRoom.getItem(item));
-                inventory.add(Item.makeItem(item));
                 return "You received the " + item + ".";
             } else {
                 return item + " is not available";
@@ -60,30 +60,44 @@ public class PC {
 
     }
 
-    public String inspectItem(String item) {
-        if(gameOver) {
-            return "Command not Available";
-        }
-        for(Item e : inventory) {
-            if(e.getName().equals(item)) {
-                return e.inspect();
-            }
-        }
-        return item + " is not in your inventory.";
-    }
-
     public String look(String[] item) {
         if(gameOver) {
             return "Command not Available";
         }
         if(item.length > 1) {
-            return inspectItem(item[1]);
+            ArrayList<Item> items = new ArrayList<>();
+            for(Item e : inventory) {
+                if(e.getName().equals(item[1])) {
+                    items.add(e);
+                }
+            }
+            StringBuilder result = new StringBuilder();
+            if (items.size() > 0) {
+                for (Item e: items){
+                    result.append(e.inspect()).append("\r\n\n");
+                }
+            }
+
+            return result.toString();
         }
-        return currentRoom.getDescription(this) + "\r\nYou see: " + currentRoom.getItems();
+        return currentRoom.getDescription(this) + "\r\nYou see: " + currentRoom.getItemString();
     }
 
     public String printInventory(){
-        return inventory.toString();
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < inventory.size(); i++) {
+            if(inventory.get(i) != null) {
+                result.append(inventory.get(i));
+                if (i + 1 < inventory.size()) {
+                    result.append(", ");
+                }
+            }
+        }
+
+        if(result.length() == 0){
+            result.append("NO ITEMS IN YOUR INVENTORY.");
+        }
+        return result.toString();
     }
 
     public String fight() {
@@ -198,9 +212,11 @@ public class PC {
         StringBuilder result = new StringBuilder();
         result.append("PC|\n");
         for (int i = 0; i < inventory.size(); i++) {
-            result.append(inventory.get(i));
-            if (i + 1 < inventory.size()) {
-                result.append(",");
+            if (inventory.get(i) != null) {
+                result.append(inventory.get(i).getName()).append("_").append(inventory.get(i).inspect());
+                if (i + 1 < inventory.size()) {
+                    result.append("*");
+                }
             }
         }
         result.append("|\n").append(currentRoom.getID()).append("|");

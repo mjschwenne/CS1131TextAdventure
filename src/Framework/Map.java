@@ -119,16 +119,18 @@ public class Map {
             for (int i = 0; i < descriptions.size(); i++) {
                 result.append(descriptions.get(i));
                 if (i + 1 < descriptions.size()) {
-                    result.append(",");
+                    result.append("*");
                 }
             }
             result.append("|\n");
 
             ArrayList<Item> rItems = r.getItems();
             for (int i = 0; i < rItems.size(); i++) {
-                result.append(rItems.get(i));
-                if (i + 1 < rItems.size()) {
-                    result.append(",");
+                if (rItems.get(i) != null) {
+                    result.append(rItems.get(i).getName()).append("_").append(rItems.get(i).inspect());
+                    if (i + 1 < rItems.size()) {
+                        result.append("*");
+                    }
                 }
             }
             result.append("|\n");
