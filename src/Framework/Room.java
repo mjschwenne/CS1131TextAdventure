@@ -112,4 +112,19 @@ public class Room {
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
+
+    public String getExits(){
+        StringBuilder result = new StringBuilder();
+        result.append("Visible exits include:\r\n");
+        if (rooms[0] != null) result.append("NORTH\r\n");
+        if (rooms[1] != null) result.append("NORTH PORTAL\r\n");
+        if (rooms[2] != null) result.append("EAST\r\n");
+        if (rooms[3] != null) result.append("EAST PORTAL\r\n");
+        if (rooms[4] != null) result.append("SOUTH\r\n");
+        if (rooms[5] != null) result.append("SOUTH PORTAL\r\n");
+        if (rooms[6] != null) result.append("WEST\r\n");
+        if (rooms[7] != null) result.append("WEST PORTAL\r\n");
+
+        return result.toString();
+    }
 }

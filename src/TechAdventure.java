@@ -75,7 +75,9 @@ public class TechAdventure implements ConnectionListener {
                         case "BUBBLES:":
                             break;
                         case "SAVE":
-                            adventureServer.sendMessage(e.getConnectionID(), save(e.getConnectionID()));
+                            long newID = Long.parseLong(e.getData().split(" ")[1]);
+                            adventureServer.changeConnectionId(e.getConnectionID(), newID);
+                            adventureServer.sendMessage(newID, save(newID));
                             break;
                         case "RESTORE":
                             adventureServer.sendMessage(e.getConnectionID(), restore("save_" + e.getConnectionID() + ".txt"));

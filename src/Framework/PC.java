@@ -80,7 +80,7 @@ public class PC {
 
             return result.toString();
         }
-        return currentRoom.getDescription(this) + "\r\nYou see: " + currentRoom.getItemString();
+        return currentRoom.getDescription(this) + "\r\nYou see: " + currentRoom.getItemString() + "\r\n" + currentRoom.getExits();
     }
 
     public String printInventory(){
