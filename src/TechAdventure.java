@@ -58,13 +58,11 @@ public class TechAdventure implements ConnectionListener {
                             adventureServer.sendMessage(e.getConnectionID(), player.go(e.getData().toUpperCase().split(" ")));
                             break;
                         case "LOOK":
-                            adventureServer.sendMessage(e.getConnectionID(), player.look());
+                            adventureServer.sendMessage(e.getConnectionID(), player.look(e.getData().toUpperCase().split(" ")));
                             break;
                         case "INVENTORY":
                             adventureServer.sendMessage(e.getConnectionID(), player.printInventory());
                             break;
-                        case "INSPECT":
-                            adventureServer.sendMessage(e.getConnectionID(), player.inspectItem(e.getData().toUpperCase().split(" ")[1]));
                         case "SAVE":
                             adventureServer.sendMessage(e.getConnectionID(), save(e.getConnectionID()));
                             break;
