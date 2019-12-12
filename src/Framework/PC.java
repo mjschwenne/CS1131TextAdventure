@@ -30,6 +30,7 @@ public class PC {
         if(currentRoom.getItem(item) == null) {
         } else {
             if(currentRoom.getItem(item).getName().equals(item)) {
+                currentRoom.getItems().remove(currentRoom.getItem(item));
                 inventory.add(Item.makeItem(item));
                 return "You received the " + item + ".";
             } else {
@@ -68,7 +69,7 @@ public class PC {
         if(item.length > 1) {
             return inspectItem(item[1]);
         }
-        return currentRoom.getDescription(this);
+        return currentRoom.getDescription(this) + "You see: " + currentRoom.getItems();
     }
 
     public String printInventory(){
@@ -85,7 +86,7 @@ public class PC {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalNorth();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look(new String[0]);
+                            return "You moved through the " + direction[2] + " " +  direction[1] + ". " + look(new String[0]) + "You see: " + currentRoom.getItems();
                         }
                     case "EAST":
                         if(currentRoom.getPortalEast() == null) {

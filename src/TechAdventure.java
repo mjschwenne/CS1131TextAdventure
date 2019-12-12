@@ -43,6 +43,7 @@ public class TechAdventure implements ConnectionListener {
             switch (e.getCode()) {
                 case CONNECTION_ESTABLISHED:
                     // What do you do when the connection is established?
+                    adventureServer.sendMessage(e.getConnectionID(), player.look(e.getData().toUpperCase().split(" ")));
                     break;
                 case TRANSMISSION_RECEIVED:
                     //adventureServer.sendMessage ( e.getConnectionID ( ), String.format ("MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
@@ -73,7 +74,7 @@ public class TechAdventure implements ConnectionListener {
                             adventureServer.disconnect(e.getConnectionID());
                             break;
                         default:
-                            adventureServer.sendMessage(e.getConnectionID(), player.resetPlayer());
+                            adventureServer.sendMessage(e.getConnectionID(), "Invalid Command");
                             break;
                     }
                     break;
