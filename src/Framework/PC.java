@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class PC {
     private Room startRoom = null;
     private Room currentRoom = null;
-    private ArrayList<Item> inventory = null;
+    ArrayList<Item> inventory = null;
     private boolean gameOver = false;
     private boolean inCombat = false;
 

@@ -71,7 +71,10 @@ public class Room {
         return name;
     }
 
-    public String getDescription(PC pc){
+    public String getDescription( PC pc ) {
+        //under construction, come back later
+        for ( Item e : pc.inventory ) {
+        }
         return descriptions.get(0);
     }
 
