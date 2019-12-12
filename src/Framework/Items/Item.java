@@ -10,7 +10,7 @@ public abstract class Item {
     public abstract String getName();
 
     public static Item makeItem(String s){
-        String[] itemData = s.split("\\*");
+        String[] itemData = s.split("_");
 
         switch (itemData[0]){
             case "ORB":
