@@ -83,6 +83,23 @@ public class Room {
         return items;
     }
 
+    public String getItemString(){
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            if(items.get(i) != null) {
+                result.append(items.get(i));
+                if (i + 1 < items.size()) {
+                    result.append(", ");
+                }
+            }
+        }
+
+        if(result.length() == 0){
+            result.append("NO ITEMS IN THIS ROOM.");
+        }
+        return result.toString();
+    }
+
     public Item getItem(String name) {
         for(Item i : items){
             if (i.getName().equals(name)){
