@@ -56,11 +56,14 @@ ORB|
 3,-1,8,-1,9,-1,-1,4|
 11|
 Exit Room|
-Congratulations! You beat the game!|
+Congratulations! You beat the game! Use RESET to play again or QUIT to disconnect.|
 |
 -1,-1,-1,-1,-1,-1,-1,-1|
 12|
 Death Room|
-Baited by the hope of escape, you go through the new portal. You find yourself over a dark pit… If you lived, you were never seen again.|
+Baited by the hope of escape, you go through the new portal. You find yourself over a dark pit… If you lived, you were never seen again. Use RESET to play again or QUIT to disconnect.|
 |
 -1,-1,-1,-1,-1,-1,-1,-1|
+PC|
+|
+0|

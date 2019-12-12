@@ -7,6 +7,8 @@ public class PC {
     private Room startRoom = null;
     private Room currentRoom = null;
     private ArrayList<Item> inventory = null;
+    private boolean gameOver = false;
+    private boolean inCombat = false;
 
     public PC(Room currentRoom) {
         this.inventory = new ArrayList<>();
@@ -15,18 +17,17 @@ public class PC {
 
     }
 
-    public String resetPlayer() {
-        currentRoom = startRoom;
-        inventory.clear();
-        return look(new String[0]);
-    }
-
     public PC(Room currentRoom, ArrayList<Item> inventory) {
         this.currentRoom = currentRoom;
         this.inventory = inventory;
+        this.gameOver = false;
+        this.inCombat = false;
     }
 
     public String getItem(String item){
+        if(gameOver || inCombat) {
+            return "Command not Available";
+        }
         if(currentRoom.getItem(item) == null) {
             return item + " is not valid.";
         } else {
@@ -41,6 +42,9 @@ public class PC {
     }
 
     public String dropItem(String item){
+        if(gameOver || inCombat) {
+            return "Command not Available";
+        }
         Item temp = null;
         for(Item e : inventory) {
             if(e.getName().equals(item)) {
@@ -57,6 +61,9 @@ public class PC {
     }
 
     public String inspectItem(String item) {
+        if(gameOver) {
+            return "Command not Available";
+        }
         for(Item e : inventory) {
             if(e.getName().equals(item)) {
                 return e.inspect();
@@ -66,6 +73,9 @@ public class PC {
     }
 
     public String look(String[] item) {
+        if(gameOver) {
+            return "Command not Available";
+        }
         if(item.length > 1) {
             return inspectItem(item[1]);
         }
@@ -76,7 +86,29 @@ public class PC {
         return inventory.toString();
     }
 
+    public String fight() {
+        inCombat = true;
+        ArrayList<String> weapons = new ArrayList<>();
+        String weaponsList = "";
+        for(Item e : inventory) {
+            if(e.getName().equals("TORCH")) {
+                weapons.add("TORCH");
+            } else if(e.getName().equals("KNIFE")) {
+                weapons.add("KNIFE");
+            } else if(e.getName().equals("BUBBLES")) {
+                weapons.add("BUBBLES");
+            }
+        }
+        for(String i: weapons) {
+            weaponsList = weaponsList + "\r\n" + i;
+        }
+        return "Choose your weapon: \r\n" + weaponsList;
+    }
+
     public String go(String[] direction) {
+        if(gameOver || inCombat) {
+            return "Command not Available";
+        }
         if(direction.length > 2) {
             //Portals
             if(direction[1].equals("PORTAL")) {
@@ -100,6 +132,10 @@ public class PC {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalWest();
+                            if(currentRoom.getID() == 12) {
+                                gameOver = true;
+                                return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
+                            }
                             return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n" + look(new String[0]);
                         }
                     case "SOUTH":
@@ -124,6 +160,10 @@ public class PC {
                         break;
                     } else {
                         currentRoom = currentRoom.getNorth();
+                        if(currentRoom.getID() == 11) {
+                            gameOver = true;
+                            return "You moved through the " + direction[1] + " door.\r\n" + currentRoom.getDescription(this);
+                        }
                         return "You moved through the " + direction[1] + " door.\r\n" + look(new String[0]);
                     }
                 case "EAST":
