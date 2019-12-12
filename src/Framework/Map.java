@@ -29,7 +29,7 @@ public class Map {
             for (int i = 0; i < rooms.length; i++) {
                 int roomID = Integer.parseInt(input.next().trim());
                 String roomName = input.next().trim();
-                ArrayList<String> descriptions = new ArrayList<>(Arrays.asList(input.next().trim().split(",")));
+                ArrayList<String> descriptions = new ArrayList<>(Arrays.asList(input.next().trim().split("\\*")));
                 ArrayList<Item> items = new ArrayList<>();
                 for (String s : input.next().trim().split(",")) {
                     items.add(Item.makeItem(s));

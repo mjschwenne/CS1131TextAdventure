@@ -1,22 +1,22 @@
 13|
 0|
 The Crypt Entrance|
-As you enter the crypt, you feel a wave of dread come over you. The dank room reeks of death. The door seals itself behind you with a loud crash,ORB=A portal that was not previously there has appeared by the exit|
+As you enter the crypt, you feel a wave of dread come over you. The dank room reeks of death. The door seals itself behind you with a loud crash*ORB=A portal that was not previously there has appeared by the exit|
 |
 -1,-1,1,-1,3,-1,-1,12|
 1|
 The Tomb of the Devout|
-You see stacks of coffins along the walls. In the center of the room you see a pedestal with a scroll on it,SCROLL1=You see stacks of coffins along the walls. They seem to shudder as you move through the room|
+You see stacks of coffins along the walls. In the center of the room you see a pedestal with a scroll on it*SCROLL1=You see stacks of coffins along the walls. They seem to shudder as you move through the room|
 SCROLL1|
 -1,-1,6,-1,2,-1,0,-1|
 2|
 The Courtyard of Gluttony|
-In the corner of the room, you spy a large mass. Unsure of its origin or makeup, you steer clear of it,ORB=The orb begins to glow. In the corner of the room, you spy a large mass that is shifting towards you|
+In the corner of the room, you spy a large mass. Unsure of its origin or makeup, you steer clear of it*ORB=The orb begins to glow. In the corner of the room, you spy a large mass that is shifting towards you|
 |
 1,7,-1,8,8,5,3,-1|
 3|
 The Altar of Heat|
-You are hit with a wave of heat. On the Western wall is a large torch,TORCH=This room feels significantly colder without the torch|
+You are hit with a wave of heat. On the Western wall is a large torch*TORCH=This room feels significantly colder without the torch|
 TORCH|
 0,-1,2,-1,4,-1,-1,-1|
 4|
@@ -26,17 +26,17 @@ You feel like the room is swaying and shifting, upon further inspection, you don
 3,-1,8,-1,9,-1,-1,10|
 5|
 The Slippery Cathedral|
-You slide through the door and struggle to keep your balance. This room is full of bubbles and suds. There are bubbles floating through the air near you. You hear a loud crash from the East,BUBBLES=The room is still slippery, there are still plenty of bubbles. Not much has changed. You hear a loud crash from the East|
+You slide through the door and struggle to keep your balance. This room is full of bubbles and suds. There are bubbles floating through the air near you. You hear a loud crash from the East*BUBBLES=The room is still slippery, there are still plenty of bubbles. Not much has changed. You hear a loud crash from the East|
 BUBBLES|
 6,-1,7,-1,8,4,-1,-1|
 6|
 The Hallway of Dread|
-As you move down the hall, you hear a loud crash coming from the East. There is a scroll tossed to the side on the ground|
+As you move down the hall, you hear a loud crash coming from the East. There is a scroll tossed to the side on the ground*SCROLL2=As you move down the hall, you hear a loud crash coming from the East.|
 SCROLL2|
 -1,-1,7,-1,5,-1,1,-1|
 7|
 The Pit of Life|
-The grand room that you have entered is quite dreary. Skeletons line the floor. It is too dark to make out any major details other than the exits,TORCH=You can see some writing on the walls: “The Beast of Gluttony reveals the way|
+The grand room that you have entered is quite dreary. Skeletons line the floor. It is too dark to make out any major details other than the exits*TORCH=You can see some writing on the walls: “The Beast of Gluttony reveals the way|
 |
 11,-1,-1,-1,5,2,6,-1|
 8|
@@ -46,12 +46,12 @@ There are several doors and portals leading in all directions. It is giving you 
 2,-1,5,-1,-1,0,4,-1|
 9|
 The Arena of the Depths|
-You enter a vast arena. You feel the spirits of several hundred gladiators stare down your back. There is a small iron knife on the ground,KNIFE=You sense the gladiators whisper to your soul: “You will do well to heed what we say: Watch your opponent, their stare gives away what they want to do. Make sure to block when they attack, attack when they throw, and throw when they block|
+You enter a vast arena. You feel the spirits of several hundred gladiators stare down your back. There is a small iron knife on the ground*KNIFE=You sense the gladiators whisper to your soul: “You will do well to heed what we say: Watch your opponent, their stare gives away what they want to do. Make sure to block when they attack, attack when they throw, and throw when they block|
 KNIFE|
 -1,-1,-1,5,-1,8,4,-1|
 10|
 The Wayward Room|
-You slide through the door and struggle to keep your balance. This room is full of bubbles and suds. There are bubbles floating through the air near you. You hear a loud crash from the East,BUBBLES=The room is still slippery, there are still plenty of bubbles. Not much has changed. You hear a loud crash from the East|
+You are blinded by a bright light. In the center of the room floats a rainbow colored orb. Could this be the rumored Orb of Space-Warp?|
 ORB|
 3,-1,8,-1,9,-1,-1,4|
 11|
