@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class PC {
     private Room startRoom = null;
-    private Room currentRoom = null;
-    ArrayList<Item> inventory = null;
-    private boolean gameOver = false;
-    private boolean inCombat = false;
+    public Room currentRoom = null;
+    ArrayList<Item> inventory = new ArrayList<>();
+    public boolean gameOver = false;
+    public boolean inCombat = false;
 
     public PC(Room currentRoom) {
         this.inventory = new ArrayList<>();
@@ -64,6 +64,9 @@ public class PC {
         if(gameOver) {
             return "Command not Available";
         }
+        if(inCombat) {
+            return currentRoom.getDescription(this) + " You are in Combat.";
+        }
         if(item.length > 1) {
             ArrayList<Item> items = new ArrayList<>();
             for(Item e : inventory) {
@@ -101,27 +104,30 @@ public class PC {
     }
 
     public String fight() {
-        inCombat = true;
-        ArrayList<String> weapons = new ArrayList<>();
-        String weaponsList = "";
-        for(Item e : inventory) {
-            if(e.getName().equals("TORCH")) {
-                weapons.add("TORCH");
-            } else if(e.getName().equals("KNIFE")) {
-                weapons.add("KNIFE");
-            } else if(e.getName().equals("BUBBLES")) {
-                weapons.add("BUBBLES");
+        if(inCombat == true) {
+            ArrayList<String> weapons = new ArrayList<>();
+            String weaponsList = "";
+            for(Item e : inventory) {
+                if(e.getName().equals("TORCH")) {
+                    weapons.add("TORCH");
+                } else if(e.getName().equals("KNIFE")) {
+                    weapons.add("KNIFE");
+                } else if(e.getName().equals("BUBBLES")) {
+                    weapons.add("BUBBLES");
+                }
             }
+            for(String i: weapons) {
+                weaponsList = weaponsList + "\r\n" + i;
+            }
+            return "Choose your weapon: \r\n" + weaponsList;
         }
-        for(String i: weapons) {
-            weaponsList = weaponsList + "\r\n" + i;
-        }
-        return "Choose your weapon: \r\n" + weaponsList;
+        return "Command not available";
+
     }
 
     public String go(String[] direction) {
         if(gameOver || inCombat) {
-            return "Command not Available";
+            return "Command not available";
         }
         if(direction.length > 2) {
             //Portals
@@ -221,5 +227,16 @@ public class PC {
         }
         result.append("|\n").append(currentRoom.getID()).append("|");
         return result;
+    }
+
+    private String getRandomNumber() {
+        switch( (int)( Math.random( ) * ( ( 3 - 1 ) + 1 ) ) + 1) {
+            default:
+                return "KNIFE";
+            case 2:
+                return "BUBBLES";
+            case 3:
+                return "TORCH";
+        }
     }
 }

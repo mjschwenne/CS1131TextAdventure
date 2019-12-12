@@ -73,7 +73,18 @@ public class Room {
 
     public String getDescription( PC pc ) {
         //under construction, come back later
-        for ( Item e : pc.inventory ) {
+        if(descriptions.size() > 1) {
+            if(pc.inventory.isEmpty()) {
+                return descriptions.get(0);
+            }
+            for ( Item e : pc.inventory) {
+                if(e.getName().equals(descriptions.get(1).split("=")[0])) {
+                    if(pc.currentRoom.getID() == 2) {
+                        pc.inCombat = true;
+                    }
+                }
+                return descriptions.get(1).split("=")[1];
+            }
         }
         return descriptions.get(0);
     }

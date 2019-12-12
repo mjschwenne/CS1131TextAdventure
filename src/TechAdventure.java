@@ -14,11 +14,14 @@ public class TechAdventure implements ConnectionListener {
     AdventureServer adventureServer = null;
     PC player = null;
     Map map = null;
+    NPC npc = null;
+    String monsterWeapon = "";
 
     public TechAdventure() {
         map = new Map("roomMap.txt");
         adventureServer = new AdventureServer();
         player = new PC(map.rooms[0]);
+        npc = new NPC();
         adventureServer.setOnTransmission(this);
     }
 
@@ -69,10 +72,13 @@ public class TechAdventure implements ConnectionListener {
                             adventureServer.sendMessage(e.getConnectionID(), player.fight());
                             break;
                         case "KNIFE":
+                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(e.getData().toUpperCase()));
                             break;
                         case "TORCH":
+                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(e.getData().toUpperCase()));
                             break;
                         case "BUBBLES:":
+                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(e.getData().toUpperCase()));
                             break;
                         case "SAVE":
                             long newID = Long.parseLong(e.getData().split(" ")[1]);
@@ -130,4 +136,5 @@ public class TechAdventure implements ConnectionListener {
         }
         return "Progress saved to save_" + connectionID + ".txt.";
     }
+
 }

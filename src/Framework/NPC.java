@@ -7,7 +7,7 @@ public class NPC {
 		return ( int )( Math.random( ) * ( ( 3 - 1 ) + 1 ) ) + 1;
 	}
 
-	public String combat( String weapon ) {
+	public String combat( String weapon) {
 		switch( weapon ) {
 			case "KNIFE":
 				x = getRandomNumber();
