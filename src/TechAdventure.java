@@ -15,7 +15,7 @@ public class TechAdventure implements ConnectionListener {
     Map map = null;
 
     public TechAdventure() {
-        map = new Map("roomTest.txt");
+        map = new Map("roomMap.txt");
         adventureServer = new AdventureServer();
         player = new PC(map.rooms[0]);
         adventureServer.setOnTransmission(this);
