@@ -25,16 +25,19 @@ public class PC {
         this.inCombat = false;
     }
 
-    public String getItem(String item){
+    public String getItem(String[] item){
         if(gameOver || inCombat) {
             return "Command not Available";
         }
-        if(currentRoom.getItem(item) == null) {
+        if(item.length < 2) {
+            return "Invalid Command";
+        }
+        if(currentRoom.getItem(item[1]) == null) {
             return item + " is not a valid item.";
         } else {
-            if (currentRoom.getItem(item).getName().equals(item)) {
-                inventory.add(currentRoom.getItem(item));
-                currentRoom.getItems().remove(currentRoom.getItem(item));
+            if (currentRoom.getItem(item[1]).getName().equals(item[1])) {
+                inventory.add(currentRoom.getItem(item[1]));
+                currentRoom.getItems().remove(currentRoom.getItem(item[1]));
                 return "You received the " + item + ".";
             } else {
                 return item + " is not available";
@@ -42,21 +45,24 @@ public class PC {
         }
     }
 
-    public String dropItem(String item){
+    public String dropItem(String[] item){
         if(gameOver || inCombat) {
             return "Command not Available";
         }
+        if(item.length < 2) {
+            return "Invalid Command";
+        }
         Item temp = null;
         for(Item e : inventory) {
-            if(e.getName().equals(item)) {
+            if(e.getName().equals(item[1])) {
                 temp = e;
             }
         }
         if(temp == null) {
-            return "You do not have the " + item + ".";
+            return "You do not have the " + item[1] + ".";
         } else {
             inventory.remove(temp);
-            return "You dropped the " + item + ".";
+            return "You dropped the " + item[1] + ".";
         }
 
     }
@@ -165,14 +171,14 @@ public class PC {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalNorth();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n " + look(new String[0]);
+                            return "You moved through the " + direction[1] + " " +  direction[2] + ".\r\n " + look(new String[0]);
                         }
                     case "EAST":
                         if(currentRoom.getPortalEast() == null) {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalEast();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n " + look(new String[0]);
+                            return "You moved through the " + direction[1] + " " +  direction[2] + ".\r\n " + look(new String[0]);
                         }
                     case "WEST":
                         if(currentRoom.getPortalWest() == null) {
@@ -181,16 +187,16 @@ public class PC {
                             currentRoom = currentRoom.getPortalWest();
                             if(currentRoom.getID() == 12) {
                                 gameOver = true;
-                                return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
+                                return "You moved through the " + direction[1] + " " + direction[2] + ".\r\n" + currentRoom.getDescription(this);
                             }
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n" + look(new String[0]);
+                            return "You moved through the " + direction[1] + " " +  direction[2] + ".\r\n" + look(new String[0]);
                         }
                     case "SOUTH":
                         if(currentRoom.getPortalSouth() == null) {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalSouth();
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n" + look(new String[0]);
+                            return "You moved through the " + direction[1] + " " +  direction[2] + ".\r\n" + look(new String[0]);
                         }
                     default:
                         return "Invalid Direction Command";

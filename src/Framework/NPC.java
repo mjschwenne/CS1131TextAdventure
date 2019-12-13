@@ -1,8 +1,6 @@
 package Framework;
 
 public class NPC {
-	private int x = 0;
-
 	public String getRandomWeapon() {
 		switch((int)( Math.random( ) * 2 + 1)) {
 			default:
