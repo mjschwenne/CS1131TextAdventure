@@ -31,6 +31,7 @@ public class TechAdventure implements ConnectionListener {
     private PC player = null;
     private Map map = null;
     private NPC npc = null;
+    private String monsterWeapon = "";
 
     public TechAdventure() {
         map = new Map();
