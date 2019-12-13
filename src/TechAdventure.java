@@ -10,7 +10,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * CS 1131 Week 13 Program
+ * This is the main class for the program. It handles the sorting of commands into the correct function and responding to the client
+ *
+ * @author Matt Schwennesen
+ * @author Max Jorgensen
+ * @author Grayson Wagner
+ */
 public class TechAdventure implements ConnectionListener {
+    //Help string detailing how to use all of the commands
     private String help = "Below is a list of all valid commands:\r\n" +
             "GET [item name] - adds the item to your inventory\r\n" +
             "DROP [item name] - drops the item in the current room\r\n" +
@@ -27,12 +36,15 @@ public class TechAdventure implements ConnectionListener {
             "RESET - starts the game over\r\n" +
             "QUIT - disconnects from the server";
 
-    private AdventureServer adventureServer = null;
-    private PC player = null;
-    private Map map = null;
-    private NPC npc = null;
-    private String monsterWeapon = "";
+    private AdventureServer adventureServer = null; //holds the adventure server
+    private PC player = null; //holds the player
+    private Map map = null; //holds the map
+    private NPC npc = null; //holds the npc
+    private String monsterWeapon = ""; //holds the weapon that the monster selects
 
+    /**
+     * Constructor of the Tech Adventure, creates the default objects
+     */
     public TechAdventure() {
         map = new Map();
         build("roomMap.txt");
@@ -42,6 +54,11 @@ public class TechAdventure implements ConnectionListener {
         adventureServer.setOnTransmission(this);
     }
 
+    /**
+     * Starts the adventure server
+     *
+     * @param args - Uses to accept alternate ports
+     */
     public static void main(String[] args) {
         TechAdventure techAdventure = new TechAdventure();
         if (args.length > 0) {
@@ -52,24 +69,32 @@ public class TechAdventure implements ConnectionListener {
 
     }
 
+    /**
+     * Starts the adventure server
+     *
+     * @param port - the port to start the server on
+     */
     public void start(int port) {
         adventureServer.startServer(port);
     }
 
+    /**
+     * Takes a connection event, processes the information and passes it to the correct method to complete the response
+     *
+     * @param e - the connection event from the adventure server
+     */
     @Override
     public void handle(ConnectionEvent e) {
-        //System.out.println( "EVENT RECEIVED - YOU MUST PARSE THE DATA AND RESPOND APPROPRIATELY");
-        //System.out.println( String.format ( "connectionId=%d, data=%s", e.getConnectionID (), e.getData() ));
         try {
             switch (e.getCode()) {
                 case CONNECTION_ESTABLISHED:
-                    // What do you do when the connection is established?
+                    // When connection is established, send the start description of the current room
                     adventureServer.sendMessage(e.getConnectionID(), player.look(e.getData().toUpperCase().split(" ")));
                     break;
                 case TRANSMISSION_RECEIVED:
-                    //adventureServer.sendMessage ( e.getConnectionID ( ), String.format ("MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
+                    //Switch statement about the type of command the player issued
                     switch (e.getData().toUpperCase().split(" ")[0]) {
-                        //GET, DROP, GO, LOOK, INVENTORY, FIGHT, SAVE, RESTORE, QUIT
+                        //GET, DROP, GO, LOOK, INVENTORY, FIGHT, KNIFE, TORCH, BUBBLES, SAVE, RESTORE, QUIT, RESET, HELP
                         case "GET":
                             adventureServer.sendMessage(e.getConnectionID(), player.getItem(e.getData().toUpperCase().split(" ")));
                             break;
@@ -133,6 +158,12 @@ public class TechAdventure implements ConnectionListener {
         }
     }
 
+    /**
+     * Builds the map and player from a given text file
+     *
+     * @param saveFilepath - the filepath to save the file at
+     * @return - Conformation that the save was created
+     */
     private String build(String saveFilepath) {
         try (Scanner input = new Scanner(new File(saveFilepath))) {
             map.build(input.useDelimiter("PC\\|").next());
@@ -149,6 +180,12 @@ public class TechAdventure implements ConnectionListener {
         }
     }
 
+    /**
+     * Creates a text file save of the current game state
+     *
+     * @param connectionID - the connection ID to save the game with
+     * @return - conformation that the save was taken
+     */
     private String save(long connectionID) {
         try (PrintWriter output = new PrintWriter(new File("save_" + connectionID + ".txt"))) {
             output.print(map.saveMap());
