@@ -71,8 +71,8 @@ public class PC {
     }
 
     public String look(String[] item) {
-        for ( Item e : inventory) {
-            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && beastSlain == false) {
+        for ( Item e : getInventory()) {
+            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && !beastSlain) {
                 inCombat = true;
             }
 
@@ -165,6 +165,10 @@ public class PC {
                             break;
                         } else {
                             currentRoom = currentRoom.getPortalNorth();
+                            if(currentRoom.getID() == 11) {
+                                gameOver = true;
+                                return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
+                            }
                             return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n " + look(new String[0]);
                         }
                     case "EAST":
