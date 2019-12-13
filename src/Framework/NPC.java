@@ -1,6 +1,13 @@
 package Framework;
 
+/**
+ * This method handles battle interacts between the player and the "beast"
+ */
 public class NPC {
+	/**
+	 * Determines which weapon is going to be used by the "beast"
+	 * @return Random weapon
+	 */
 	public String getRandomWeapon() {
 		switch((int)((Math.random() * 2) + 1)) {
 			default:
@@ -12,6 +19,13 @@ public class NPC {
 		}
 	}
 
+	/**
+	 * Takes in the player, weapon, and enemy weapon and returns the appropriate battle interaction.
+	 * @param pc
+	 * @param weapon
+	 * @param enemyWeapon
+	 * @return battle interaction
+	 */
 	public String combat(PC pc, String weapon, String enemyWeapon) {
 		switch( weapon ) {
 			case "KNIFE":
@@ -55,6 +69,11 @@ public class NPC {
 		}
 	}
 
+	/**
+	 * Returns the sign of what weapon the monster will use.
+	 * @param weapon
+	 * @return weapon selection dialog.
+	 */
 	public String monsterWeaponDialog(String weapon) {
 		switch (weapon) {
 			case "TORCH":

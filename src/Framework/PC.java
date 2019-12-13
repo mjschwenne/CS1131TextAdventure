@@ -3,14 +3,28 @@ import Framework.Items.Item;
 
 import java.util.ArrayList;
 
-public class PC {
-    private Room startRoom = null;
-    public Room currentRoom = null;
-    ArrayList<Item> inventory = new ArrayList<>();
-    public boolean gameOver = false;
-    public boolean inCombat = false;
-    public boolean beastSlain = false;
+/**
+ * This class handles all the interactions between the player and the game evnironment.
+ *
+ * @author Max Jorgensen
+ * @author Grayson Wagner
+ * @author Matt Schwennesen
+ *
+ * Date Last Modified: 12/12/2019
+ */
 
+public class PC {
+    private Room startRoom = null; //The room that the player starts in.
+    public Room currentRoom = null; //The room that the player is currently in.
+    ArrayList<Item> inventory = new ArrayList<>(); //The players inventory.
+    public boolean gameOver = false; //Checks if the game has ended.
+    public boolean inCombat = false; //Checks if the player is in combat.
+    public boolean beastSlain = false; //Checks if the monster has been defeated.
+
+    /**
+     * This constructor initalizes the player in the given room.
+     * @param currentRoom
+     */
     public PC(Room currentRoom) {
         this.inventory = new ArrayList<>();
         this.currentRoom = currentRoom;
@@ -18,6 +32,11 @@ public class PC {
 
     }
 
+    /**
+     * This constructor intializes the player with the potential for keeping inventory items.
+     * @param currentRoom
+     * @param inventory
+     */
     public PC(Room currentRoom, ArrayList<Item> inventory) {
         this.currentRoom = currentRoom;
         this.inventory = inventory;
@@ -25,16 +44,25 @@ public class PC {
         this.inCombat = false;
     }
 
+    /**
+     * Allows the player to pick up items from the environment
+     * @param item
+     * @return String of success or not.
+     */
     public String getItem(String[] item){
+        //Checks if the command can be used in the situation.
         if(gameOver || inCombat) {
             return "Command not Available";
         }
+        //Checks if the command was entered  properly.
         if(item.length < 2) {
             return "Invalid Command";
         }
+        //Checks if the item given is in the room.
         if(currentRoom.getItem(item[1]) == null) {
             return item[1] + " is not a valid item.";
         } else {
+            //Checks if the item given can be added to the player's inventory.
             if (currentRoom.getItem(item[1]).getName().equals(item[1])) {
                 inventory.add(currentRoom.getItem(item[1]));
                 currentRoom.getItems().remove(currentRoom.getItem(item[1]));
@@ -45,18 +73,25 @@ public class PC {
         }
     }
 
+    /**
+     * This method allows the player to remove an item from their inventory.
+     * @param item
+     * @return String for success or not.
+     */
     public String dropItem(String[] item){
+        //Checks if the command can be used.
         if(gameOver || inCombat) {
             return "Command not Available";
         }
+        //Checks if the command was entered properly.
         if(item.length < 2) {
             return "Invalid Command";
         }
+        //Checks if the item is in the player's inventory and drops it.
         Item temp = null;
         for(Item e : inventory) {
             if(e.getName().equals(item[1])) {
                 temp = e;
-                currentRoom.addItem(e);
             }
         }
         if(temp == null) {
@@ -68,6 +103,10 @@ public class PC {
 
     }
 
+    /**
+     * Returns the arraylist of items in the player's inventory.
+     * @return inventory
+     */
     public ArrayList<Item> getInventory(){
         ArrayList<Item> cleanInventory = new ArrayList<>();
         for (Item e: inventory){
@@ -77,6 +116,11 @@ public class PC {
         return inventory;
     }
 
+    /**
+     * Helper method that checks if the given item is in the player's inventory.
+     * @param item
+     * @return item or null.
+     */
     public Item getItem(String item){
         for(Item e : getInventory()){
             if (e.getName().equals(item)){
@@ -86,16 +130,24 @@ public class PC {
         return null;
     }
 
+    /**
+     * Shows the description of either the item specified or the current room.
+     * @param item
+     * @return Room description or specified item description.
+     */
     public String look(String[] item) {
+        //Checks the requirements for initializing combat.
         for ( Item e : getInventory()) {
             if(e.getName().equals("ORB") && currentRoom.getID() == 2 && !beastSlain) {
                 inCombat = true;
             }
 
         }
+        //Checks if the command can be  used.
         if(gameOver) {
             return "Command not Available";
         }
+        //Checks if the given item is in your inventory.
         if(item.length > 1) {
             ArrayList<Item> items = new ArrayList<>();
             for(Item e : inventory) {
@@ -103,6 +155,7 @@ public class PC {
                     items.add(e);
                 }
             }
+            //Creates a string builder of the item description.
             StringBuilder result = new StringBuilder();
             if (items.size() > 0) {
                 for (Item e: items){
@@ -110,10 +163,9 @@ public class PC {
                 }
             }
 
-            if (result.length() == 0) result.append("Invalid command");
-
             return result.toString();
         }
+        //Checks if the player is in combat.
         if(inCombat) {
             return currentRoom.getDescription(this) + " You are in Combat. Use FIGHT to select a weapon.";
         } else {
@@ -122,7 +174,12 @@ public class PC {
 
     }
 
+    /**
+     * Prints the player's inventory in a clean looking fashion.
+     * @return String of inventory
+     */
     public String printInventory(){
+        //Creates a new string builder and adds each element in the array.
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < inventory.size(); i++) {
             if(inventory.get(i) != null) {
@@ -133,13 +190,19 @@ public class PC {
             }
         }
 
+        //Return a given statement if the inventory is empty.
         if(result.length() == 0){
             result.append("NO ITEMS IN YOUR INVENTORY.");
         }
         return result.toString();
     }
 
+    /**
+     * This method handles initalizing combat for the player.
+     * @return String of weapon options.
+     */
     public String fight() {
+        //Checks if a fight has started and what weapons are in your inventory.
         if(inCombat) {
             ArrayList<String> weapons = new ArrayList<>();
             String weaponsList = "";
@@ -156,9 +219,11 @@ public class PC {
                         break;
                 }
             }
+            //Puts the weapons on a String to print.
             for(String i: weapons) {
                 weaponsList = weaponsList + "\r\n" + i;
             }
+            //Kills you if you have no weapons.
             if(weapons.isEmpty()) {
                 gameOver = true;
                 return "You had no weapons. You were brutally murdered. Use RESET to restart or QUIT to disconnect.";
@@ -170,32 +235,36 @@ public class PC {
     }
 
 
+    /**
+     * This method handles all of the movement that the player can make.
+     * @param direction
+     * @return String of success or not.
+     */
     public String go(String[] direction) {
+        //Checks if the command can be used.
         if(gameOver || inCombat) {
             return "Command not available";
         }
-
+        //Checks if the command was input properly.
         if (direction.length <= 1) {
             return "Invalid command";
         }
 
+        //Checks if the command is the correct length for a portal or a door.
         if(direction.length > 2) {
             //Portals
             if(direction[2].equals("PORTAL")) {
                 switch(direction[1]) {
                     case "NORTH":
-                        if (currentRoom.getID() == 7 && beastSlain && getInventory().contains(getItem("ORB"))) {
+                        if(currentRoom.getPortalNorth() == null) {
+                            break;
+                        } else {
                             currentRoom = currentRoom.getPortalNorth();
                             if (currentRoom.getID() == 12) {
                                 gameOver = true;
                                 return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
                             }
-                            return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + look(new String[0]);
-                        } else if (currentRoom.getID() != 7){
-                            currentRoom = currentRoom.getPortalNorth();
-                            return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + look(new String[0]);
-                        } else {
-                            return "You attempt to move through the portal but cannot... Its almost like you need something else to be able to do that... or perhaps something is pulling you back.";
+                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n " + look(new String[0]);
                         }
                     case "EAST":
                         if(currentRoom.getPortalEast() == null) {
@@ -210,6 +279,7 @@ public class PC {
                         } else {
                             if (currentRoom.getID() == 0 && getInventory().contains(getItem("ORB"))) {
                                 currentRoom = currentRoom.getPortalWest();
+                                //Special case, exit room.
                                 if (currentRoom.getID() == 11) {
                                     gameOver = true;
                                     return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
@@ -244,6 +314,7 @@ public class PC {
                         break;
                     } else {
                         currentRoom = currentRoom.getNorth();
+                        //Special case, exit room.
                         if(currentRoom.getID() == 11) {
                             gameOver = true;
                             return "You moved through the " + direction[1] + " door.\r\n" + currentRoom.getDescription(this);
@@ -278,6 +349,10 @@ public class PC {
         }
     }
 
+    /**
+     * Handles the players state for saving the game.
+     * @return The Stringbuilder of the player's state.
+     */
     public StringBuilder save(){
         StringBuilder result = new StringBuilder();
         result.append("PC|\n");
