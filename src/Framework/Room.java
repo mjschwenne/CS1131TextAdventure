@@ -124,6 +124,10 @@ public class Room {
         return null;
     }
 
+    public void addItem(Item e){
+        items.add(e);
+    }
+
     public void setItems(ArrayList<Item> items) {
         this.items = items;
     }

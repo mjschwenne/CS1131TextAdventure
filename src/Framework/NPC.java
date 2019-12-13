@@ -2,7 +2,7 @@ package Framework;
 
 public class NPC {
 	public String getRandomWeapon() {
-		switch((int)( Math.random( ) * 2 + 1)) {
+		switch((int)((Math.random() * 2) + 1)) {
 			default:
 				return "KNIFE";
 			case 2:
@@ -15,11 +15,11 @@ public class NPC {
 	public String combat(PC pc, String weapon, String enemyWeapon) {
 		switch( weapon ) {
 			case "KNIFE":
-				if(enemyWeapon == "BUBBLES") {
+				if(enemyWeapon.equals("BUBBLES")) {
 					pc.inCombat = false;
 					pc.beastSlain = true;
-					return "You quickly stab the beast.";
-				} else if(enemyWeapon == "TORCH") {
+					return "You quickly stab the beast. As the beast exhales its last breath, the live in the crypt seems to leave in a one final sigh.";
+				} else if(enemyWeapon.equals("TORCH")) {
 					pc.inCombat = false;
 					pc.gameOver = true;
 					return "You have been burned to a crisp. Use RESET to restart or QUIT to disconnect.";
@@ -27,11 +27,11 @@ public class NPC {
 					return "You both clash your weapons. You are in combat. Enter FIGHT to pick a weapon.";
 				}
 			case "TORCH":
-				if(enemyWeapon == "KNIFE") {
+				if(enemyWeapon.equals("KNIFE")) {
 					pc.inCombat = false;
 					pc.beastSlain = true;
-					return "You burned the beast to a crisp.";
-				} else if(enemyWeapon == "BUBBLES") {
+					return "You burned the beast to a crisp. As the beast exhales its last breath, the live in the crypt seems to leave in a one final sigh.";
+				} else if(enemyWeapon.equals("BUBBLES")) {
 					pc.inCombat = false;
 					pc.gameOver = true;
 					return "Your light has been put out. Use RESET to restart or QUIT to disconnect.";
@@ -39,11 +39,11 @@ public class NPC {
 					return "You both now have a bigger fire. You are in combat. Enter FIGHT to pick a weapon.";
 				}
 			case "BUBBLES":
-				if(enemyWeapon == "TORCH") {
+				if(enemyWeapon.equals("TORCH")) {
 					pc.inCombat = false;
 					pc.beastSlain = true;
-					return "You dowsed the beast's flame.";
-				} else if(enemyWeapon == "KNIFE") {
+					return "You dowsed the beast's flame. As the beast exhales its last breath, the live in the crypt seems to leave in a one final sigh.";
+				} else if(enemyWeapon.equals("KNIFE")) {
 					pc.inCombat = false;
 					pc.gameOver = true;
 					return "The beast pops your bubble. Use RESET to restart or QUIT to disconnect.";

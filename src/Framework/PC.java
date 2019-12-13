@@ -56,6 +56,7 @@ public class PC {
         for(Item e : inventory) {
             if(e.getName().equals(item[1])) {
                 temp = e;
+                currentRoom.addItem(e);
             }
         }
         if(temp == null) {
@@ -76,9 +77,18 @@ public class PC {
         return inventory;
     }
 
+    public Item getItem(String item){
+        for(Item e : getInventory()){
+            if (e.getName().equals(item)){
+                return e;
+            }
+        }
+        return null;
+    }
+
     public String look(String[] item) {
-        for ( Item e : inventory) {
-            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && beastSlain == false) {
+        for ( Item e : getInventory()) {
+            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && !beastSlain) {
                 inCombat = true;
             }
 
@@ -99,6 +109,8 @@ public class PC {
                     result.append(e.inspect()).append("\r\n\n");
                 }
             }
+
+            if (result.length() == 0) result.append("Invalid command");
 
             return result.toString();
         }
@@ -162,20 +174,28 @@ public class PC {
         if(gameOver || inCombat) {
             return "Command not available";
         }
+
+        if (direction.length <= 1) {
+            return "Invalid command";
+        }
+
         if(direction.length > 2) {
             //Portals
             if(direction[2].equals("PORTAL")) {
                 switch(direction[1]) {
                     case "NORTH":
-                        if(currentRoom.getPortalNorth() == null) {
-                            break;
-                        } else {
+                        if (currentRoom.getID() == 7 && beastSlain && getInventory().contains(getItem("ORB"))) {
                             currentRoom = currentRoom.getPortalNorth();
-                            if(currentRoom.getID() == 11) {
+                            if (currentRoom.getID() == 12) {
                                 gameOver = true;
                                 return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
                             }
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n " + look(new String[0]);
+                            return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + look(new String[0]);
+                        } else if (currentRoom.getID() != 7){
+                            currentRoom = currentRoom.getPortalNorth();
+                            return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + look(new String[0]);
+                        } else {
+                            return "You attempt to move through the portal but cannot... Its almost like you need something else to be able to do that... or perhaps something is pulling you back.";
                         }
                     case "EAST":
                         if(currentRoom.getPortalEast() == null) {
@@ -188,12 +208,19 @@ public class PC {
                         if(currentRoom.getPortalWest() == null) {
                             break;
                         } else {
-                            currentRoom = currentRoom.getPortalWest();
-                            if(currentRoom.getID() == 12) {
-                                gameOver = true;
-                                return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
+                            if (currentRoom.getID() == 0 && getInventory().contains(getItem("ORB"))) {
+                                currentRoom = currentRoom.getPortalWest();
+                                if (currentRoom.getID() == 11) {
+                                    gameOver = true;
+                                    return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + currentRoom.getDescription(this);
+                                }
+                                return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + look(new String[0]);
+                            } else if (currentRoom.getID() != 0){
+                                currentRoom = currentRoom.getPortalWest();
+                                return "You moved through the " + direction[2] + " " + direction[1] + ".\r\n" + look(new String[0]);
+                            } else {
+                                return "You attempt to move through the portal but cannot... Its almost like you need something else to be able to do that... or perhaps something is pulling you back.";
                             }
-                            return "You moved through the " + direction[2] + " " +  direction[1] + ".\r\n" + look(new String[0]);
                         }
                     case "SOUTH":
                         if(currentRoom.getPortalSouth() == null) {
