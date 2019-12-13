@@ -9,6 +9,7 @@ public class PC {
     ArrayList<Item> inventory = new ArrayList<>();
     public boolean gameOver = false;
     public boolean inCombat = false;
+    public boolean beastSlain = false;
 
     public PC(Room currentRoom) {
         this.inventory = new ArrayList<>();
@@ -70,11 +71,14 @@ public class PC {
     }
 
     public String look(String[] item) {
+        for ( Item e : inventory) {
+            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && beastSlain == false) {
+                inCombat = true;
+            }
+
+        }
         if(gameOver) {
             return "Command not Available";
-        }
-        if(inCombat) {
-            return currentRoom.getDescription(this) + " You are in Combat.";
         }
         if(item.length > 1) {
             ArrayList<Item> items = new ArrayList<>();
@@ -92,7 +96,12 @@ public class PC {
 
             return result.toString();
         }
-        return currentRoom.getDescription(this) + "\r\nYou see: " + currentRoom.getItemString() + "\r\n" + currentRoom.getExits();
+        if(inCombat) {
+            return currentRoom.getDescription(this) + " You are in Combat. Use FIGHT to select a weapon.";
+        } else {
+            return currentRoom.getDescription(this) + "\r\nYou see: " + currentRoom.getItemString() + "\r\n" + currentRoom.getExits();
+        }
+
     }
 
     public String printInventory(){
@@ -132,6 +141,10 @@ public class PC {
             for(String i: weapons) {
                 weaponsList = weaponsList + "\r\n" + i;
             }
+            if(weapons.isEmpty()) {
+                gameOver = true;
+                return "You had no weapons. You were brutally murdered. Use RESET to restart or QUIT to disconnect.";
+            }
             return "Choose your weapon: \r\n" + weaponsList;
         }
         return "Command not available";
@@ -145,8 +158,8 @@ public class PC {
         }
         if(direction.length > 2) {
             //Portals
-            if(direction[1].equals("PORTAL")) {
-                switch(direction[2]) {
+            if(direction[2].equals("PORTAL")) {
+                switch(direction[1]) {
                     case "NORTH":
                         if(currentRoom.getPortalNorth() == null) {
                             break;
@@ -241,16 +254,5 @@ public class PC {
         }
         result.append("|\n").append(currentRoom.getID()).append("|");
         return result;
-    }
-
-    private String getRandomNumber() {
-        switch( (int)( Math.random( ) * ( ( 3 - 1 ) + 1 ) ) + 1) {
-            default:
-                return "KNIFE";
-            case 2:
-                return "BUBBLES";
-            case 3:
-                return "TORCH";
-        }
     }
 }

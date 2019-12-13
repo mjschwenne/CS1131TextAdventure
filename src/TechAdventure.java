@@ -85,16 +85,18 @@ public class TechAdventure implements ConnectionListener {
                             adventureServer.sendMessage(e.getConnectionID(), player.printInventory());
                             break;
                         case "FIGHT":
+                            monsterWeapon = npc.getRandomWeapon();
+                            adventureServer.sendMessage(e.getConnectionID(), npc.monsterWeaponDialog(monsterWeapon));
                             adventureServer.sendMessage(e.getConnectionID(), player.fight());
                             break;
                         case "KNIFE":
-                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(e.getData().toUpperCase()));
+                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(player, e.getData().toUpperCase(), monsterWeapon));
                             break;
                         case "TORCH":
-                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(e.getData().toUpperCase()));
+                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(player, e.getData().toUpperCase(), monsterWeapon));
                             break;
-                        case "BUBBLES:":
-                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(e.getData().toUpperCase()));
+                        case "BUBBLES":
+                            adventureServer.sendMessage(e.getConnectionID(), npc.combat(player, e.getData().toUpperCase(), monsterWeapon));
                             break;
                         case "SAVE":
                             long newID = Long.parseLong(e.getData().split(" ")[1]);

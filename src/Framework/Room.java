@@ -79,11 +79,9 @@ public class Room {
             }
             for ( Item e : pc.getInventory()) {
                 if(e.getName().equals(descriptions.get(1).split("=")[0])) {
-                    if(pc.currentRoom.getID() == 2) {
-                        pc.inCombat = true;
-                    }
+                    return descriptions.get(1).split("=")[1];
                 }
-                return descriptions.get(1).split("=")[1];
+
             }
         }
         return descriptions.get(0);
