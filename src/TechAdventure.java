@@ -71,10 +71,10 @@ public class TechAdventure implements ConnectionListener {
                     switch (e.getData().toUpperCase().split(" ")[0]) {
                         //GET, DROP, GO, LOOK, INVENTORY, FIGHT, SAVE, RESTORE, QUIT
                         case "GET":
-                            adventureServer.sendMessage(e.getConnectionID(), player.getItem(e.getData().toUpperCase().split(" ")[1]));
+                            adventureServer.sendMessage(e.getConnectionID(), player.getItem(e.getData().toUpperCase().split(" ")));
                             break;
                         case "DROP":
-                            adventureServer.sendMessage(e.getConnectionID(), player.dropItem(e.getData().toUpperCase().split(" ")[1]));
+                            adventureServer.sendMessage(e.getConnectionID(), player.dropItem(e.getData().toUpperCase().split(" ")));
                             break;
                         case "GO":
                             adventureServer.sendMessage(e.getConnectionID(), player.go(e.getData().toUpperCase().split(" ")));

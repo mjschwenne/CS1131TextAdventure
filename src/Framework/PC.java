@@ -71,8 +71,8 @@ public class PC {
     }
 
     public String look(String[] item) {
-        for ( Item e : getInventory()) {
-            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && !beastSlain) {
+        for ( Item e : inventory) {
+            if(e.getName().equals("ORB") && currentRoom.getID() == 2 && beastSlain == false) {
                 inCombat = true;
             }
 
