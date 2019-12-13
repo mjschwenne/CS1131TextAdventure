@@ -38,7 +38,7 @@ SCROLL_The greatest trick of the monks of the underground was to make an exit th
 The Pit of Life|
 The grand room that you have entered is quite dreary. Skeletons line the floor. It is too dark to make out any major details other than the exits.*TORCH=You can see some writing on the walls: “The Beast of Gluttony reveals the way.|
 |
-11,-1,-1,-1,5,2,6,-1|
+-1,11,-1,-1,5,2,6,-1|
 8|
 The Atrium|
 There are several doors and portals leading in all directions. It is giving you a slight headache.|

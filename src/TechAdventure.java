@@ -11,6 +11,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TechAdventure implements ConnectionListener {
+    private String help = "Below is a list of all valid commands:\r\n" +
+            "GET [item name] - adds the item to your inventory\r\n" +
+            "DROP [item name] - drops the item in the current room\r\n" +
+            "GO [direction] or GO [direction portal] - moves through the door or portal\r\n" +
+            "LOOK - prints the description of the room\r\n" +
+            "LOOK [item name] - prints the description of the item\r\n" +
+            "INVENTORY - prints all the items in your inventory\r\n" +
+            "FIGHT - Starts a fight\r\n" +
+            "\tKNIFE - use the knife in a fight\r\n" +
+            "\tTORCH - use the torch in a fight\r\n" +
+            "\tBUBBLES - use the bubble in a fight\r\n" +
+            "SAVE [save id] - creates a save with the given ID\r\n" +
+            "RESTORE - loads the last save with your current ID\r\n" +
+            "RESET - starts the game over\r\n" +
+            "QUIT - disconnects from the server";
+
     private AdventureServer adventureServer = null;
     private PC player = null;
     private Map map = null;
@@ -94,8 +110,12 @@ public class TechAdventure implements ConnectionListener {
                         case "RESET":
                             adventureServer.sendMessage(e.getConnectionID(), build("roomMap.txt"));
                             break;
+                        case "HELP":
+                            adventureServer.sendMessage(e.getConnectionID(), help);
+                            break;
                         default:
-                            adventureServer.sendMessage(e.getConnectionID(), "Invalid Command");
+                            adventureServer.sendMessage(e.getConnectionID(), "Invalid Command, try some of these\r\n");
+                            adventureServer.sendMessage(e.getConnectionID(), help);
                             break;
                     }
                     break;
