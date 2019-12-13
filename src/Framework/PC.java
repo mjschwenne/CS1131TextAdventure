@@ -25,38 +25,44 @@ public class PC {
         this.inCombat = false;
     }
 
-    public String getItem(String item){
+    public String getItem(String[] item){
         if(gameOver || inCombat) {
             return "Command not Available";
         }
-        if(currentRoom.getItem(item) == null) {
-            return item + " is not a valid item.";
+        if(item.length < 2) {
+            return "Invalid Command";
+        }
+        if(currentRoom.getItem(item[1]) == null) {
+            return item[1] + " is not a valid item.";
         } else {
-            if (currentRoom.getItem(item).getName().equals(item)) {
-                inventory.add(currentRoom.getItem(item));
-                currentRoom.getItems().remove(currentRoom.getItem(item));
-                return "You received the " + item + ".";
+            if (currentRoom.getItem(item[1]).getName().equals(item[1])) {
+                inventory.add(currentRoom.getItem(item[1]));
+                currentRoom.getItems().remove(currentRoom.getItem(item[1]));
+                return "You received the " + item[1] + ".";
             } else {
-                return item + " is not available";
+                return item[1] + " is not available";
             }
         }
     }
 
-    public String dropItem(String item){
+    public String dropItem(String[] item){
         if(gameOver || inCombat) {
             return "Command not Available";
         }
+        if(item.length < 2) {
+            return "Invalid Command";
+        }
         Item temp = null;
         for(Item e : inventory) {
-            if(e.getName().equals(item)) {
+            if(e.getName().equals(item[1])) {
                 temp = e;
             }
         }
         if(temp == null) {
-            return "You do not have the " + item + ".";
+            return "You do not have the " + item[1] + ".";
         } else {
             inventory.remove(temp);
-            return "You dropped the " + item + ".";
+            return "You dropped the " + item[1] + ".";
         }
 
     }
