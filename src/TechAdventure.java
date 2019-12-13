@@ -46,11 +46,7 @@ public class TechAdventure implements ConnectionListener {
      * Constructor of the Tech Adventure, creates the default objects
      */
     public TechAdventure() {
-        map = new Map();
-        build("roomMap.txt");
         adventureServer = new AdventureServer();
-        player = new PC(map.rooms[0]);
-        npc = new NPC();
         adventureServer.setOnTransmission(this);
     }
 
@@ -88,6 +84,10 @@ public class TechAdventure implements ConnectionListener {
         try {
             switch (e.getCode()) {
                 case CONNECTION_ESTABLISHED:
+                    map = new Map();
+                    build("roomMap.txt");
+                    player = new PC(map.rooms[0]);
+                    npc = new NPC();
                     // When connection is established, send the start description of the current room
                     adventureServer.sendMessage(e.getConnectionID(), player.look(e.getData().toUpperCase().split(" ")));
                     break;
@@ -148,7 +148,8 @@ public class TechAdventure implements ConnectionListener {
                     }
                     break;
                 case CONNECTION_TERMINATED:
-                    // Cleanup when the connection is terminated.
+                    player = null;
+                    map = null;
                     break;
                 default:
                     // What is a reasonable default?
