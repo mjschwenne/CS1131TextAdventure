@@ -192,6 +192,15 @@ public class Room {
         return result.toString();
     }
 
+    public ArrayList<Item> cleanItems(){
+        ArrayList<Item> cleanItems = new ArrayList<>();
+        for (Item e: items){
+            if (e != null) cleanItems.add(e);
+        }
+        items = cleanItems;
+        return items;
+    }
+
     /**
      * Searches the items in the room for an item with a given name
      *
@@ -199,7 +208,7 @@ public class Room {
      * @return - the item, if found, null otherwise
      */
     public Item getItem(String name) {
-        for (Item i : items) {
+        for (Item i : cleanItems()) {
             if (i.getName().equals(name)) {
                 return i;
             }
